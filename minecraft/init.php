@@ -45,9 +45,31 @@ function getPlayerStats($pseudo) {
                     $userWorldStats = "none";
                 }
 
-                $playerStatsSelected[$worldOne['name']] = $userWorldStats;
+                $playerStatsSelected['world'][$worldOne['name']] = $userWorldStats;
 
             }
+
+            $allStats = [];
+
+            foreach ($playerStatsSelected['world'] as $playerStatsOneMap){
+
+                if ($playerStatsOneMap !== "none"){
+
+                    foreach (array_keys($allStats + $playerStatsOneMap) as $key) {
+                        $allStatsNew[$key] = ($allStats[$key] ?? 0) + ($playerStatsOneMap[$key] ?? 0);
+                    }
+
+                    $allStats = $allStatsNew;
+
+                }
+
+            }
+
+            if ($allStats !== []){
+                $playerStatsSelected['all'] = $allStats;
+            }
+
+
         }
     }
 

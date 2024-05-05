@@ -1,0 +1,20 @@
+$defaultMap = [
+    "stat.walkOneCm" => 45153,
+    "stat.leaveGame" => 7,
+    "stat.useItem.ironchest.iron_chest" => 1,
+    "stat.useItem.tyromod.goldonite_block" => 3,
+];
+
+$devMap = [
+    "stat.useItem.tyromod.goldonite_block" => 3,
+    "stat.leaveGame" => 91,
+    "stat.useItem.tyromod.tyrolium_hoe" => 2,
+];
+
+$mergedMap = [];
+
+foreach (array_keys($defaultMap + $devMap) as $key) {
+    $mergedMap[$key] = ($defaultMap[$key] ?? 0) + ($devMap[$key] ?? 0);
+}
+
+var_dump($mergedMap);

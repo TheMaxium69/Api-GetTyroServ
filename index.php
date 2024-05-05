@@ -8,20 +8,21 @@ include './vendor/autoload.php';
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-if (empty($_GET['pseudo'])){
-    echo json_encode(["status"=>"ok", "message"=>"no pseudo"]);
-    exit();
-}
-$pseudo = $_GET['pseudo'];
-
 // TASK
 require "minecraft/init.php";
 require "factions/init.php";
 require "essential/init.php";
 require "luckperms/init.php";
+require "tyroserv/init.php";
 
 
 if (empty($_GET['task'])){
+
+    if (empty($_GET['pseudo'])){
+        echo json_encode(["status"=>"ok", "message"=>"no pseudo"]);
+        exit();
+    }
+    $pseudo = $_GET['pseudo'];
 
     $result['player'] = getPlayer($pseudo);
     if ($result['player'] !== "no player"){
@@ -47,90 +48,141 @@ if (empty($_GET['task'])){
 
     $task = $_GET['task'];
 
-    if ($task == "faction"){
+    /*TASK PAR UTILISATEUR*/
+    if (empty($_GET['global'])){
 
-        $result = getFactionByUser($pseudo);
+        if (empty($_GET['pseudo'])){
+            echo json_encode(["status"=>"ok", "message"=>"no pseudo"]);
+            exit();
+        }
+        $pseudo = $_GET['pseudo'];
 
-        echo json_encode([
-            "status"=>"ok",
-            "message"=>"La faction de " . $pseudo,
-            "result"=>$result
-        ]);
+        if ($task == "faction"){
 
-
-    } else if ($task == "player"){
-
-        $result = getPlayer($pseudo);
-
-        echo json_encode([
-            "status"=>"ok",
-            "message"=>"Les players data de " . $pseudo,
-            "result"=>$result
-        ]);
-
-
-    } else if ($task == "roles"){
-
-        $player = getPlayer($pseudo);
-        if ($player !== "no player") {
-
-            $result = getRoles($player['uuid']);
+            $result = getFactionByUser($pseudo);
 
             echo json_encode([
-                "status" => "ok",
-                "message" => "Les roles de " . $pseudo,
-                "result" => $result
+                "status"=>"ok",
+                "message"=>"La faction de " . $pseudo,
+                "result"=>$result
             ]);
+
+
+        } else if ($task == "player"){
+
+            $result = getPlayer($pseudo);
+
+            echo json_encode([
+                "status"=>"ok",
+                "message"=>"Les players data de " . $pseudo,
+                "result"=>$result
+            ]);
+
+
+        } else if ($task == "roles"){
+
+            $player = getPlayer($pseudo);
+            if ($player !== "no player") {
+
+                $result = getRoles($player['uuid']);
+
+                echo json_encode([
+                    "status" => "ok",
+                    "message" => "Les roles de " . $pseudo,
+                    "result" => $result
+                ]);
+            } else {
+
+                echo json_encode([
+                    "status"=>"ok",
+                    "message"=>"Les roles de " . $pseudo,
+                    "result"=>$player
+                ]);
+
+            }
+
+
+        } else if ($task == "money"){
+
+            $player = getPlayer($pseudo);
+            if ($player !== "no player") {
+
+                $result = getMoney($player['uuid']);
+
+                echo json_encode([
+                    "status" => "ok",
+                    "message" => "La money de " . $pseudo,
+                    "result" => $result
+                ]);
+            } else {
+
+                echo json_encode([
+                    "status"=>"ok",
+                    "message"=>"La money de " . $pseudo,
+                    "result"=>$player
+                ]);
+
+            }
+
+
+        } else if ($task == "stats"){
+
+            $playerStats = getPlayerStats($pseudo);
+
+            echo json_encode([
+                "status"=>"ok",
+                "message"=>"Les world stats de " . $pseudo,
+                "result"=>$playerStats
+            ]);
+
         } else {
 
             echo json_encode([
                 "status"=>"ok",
-                "message"=>"Les roles de " . $pseudo,
-                "result"=>$player
+                "message"=>"task inconnue"
             ]);
+
 
         }
 
-
-    } else if ($task == "money"){
-
-        $player = getPlayer($pseudo);
-        if ($player !== "no player") {
-
-            $result = getMoney($player['uuid']);
-
-            echo json_encode([
-                "status" => "ok",
-                "message" => "La money de " . $pseudo,
-                "result" => $result
-            ]);
-        } else {
-
-            echo json_encode([
-                "status"=>"ok",
-                "message"=>"La money de " . $pseudo,
-                "result"=>$player
-            ]);
-
-        }
-
-
-    } else if ($task == "stats"){
-
-        $playerStats = getPlayerStats($pseudo);
-
-        echo json_encode([
-            "status"=>"ok",
-            "message"=>"Les world stats de " . $pseudo,
-            "result"=>$playerStats
-        ]);
 
     } else {
+        /*TASK GLOBAL*/
 
-        echo json_encode([
-            "status"=>"ok",
-            "message"=>"task inconnue"
-        ]);
+        if ($task == "stats"){
+
+            $globalStats = getAllStats();
+
+            echo json_encode([
+                "status"=>"ok",
+                "message"=>"Les world stats global",
+                "result"=>$globalStats
+            ]);
+
+        } else if ($task == "factions"){
+
+            $globalFac = getAllFaction();
+
+            echo json_encode([
+                "status"=>"ok",
+                "message"=>"toutes les factions",
+                "result"=>$globalFac
+            ]);
+
+        } else {
+
+
+            $resultGlobal['factions'] = getAllFaction();
+            $resultGlobal['stats'] = getAllStats();
+
+
+            echo json_encode([
+                "status"=>"ok",
+                "message"=>"Information global",
+                "result"=>$resultGlobal
+            ]);
+
+        }
 
 
     }

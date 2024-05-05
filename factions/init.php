@@ -38,3 +38,29 @@ function getFactionByUser($pseudo){
     return $message;
 
 }
+
+function getAllFaction() {
+
+    require "./env.php";
+
+    $factionsFile = getFile($f_factionsFile);
+
+    $factionAll = [];
+
+    foreach ($factionsFile as $oneFaction) {
+
+        $faction = [
+            "id" => $oneFaction['id'],
+            "name" => $oneFaction['tag'],
+            "foundedDate" => $oneFaction['foundedDate'],
+            "description" => $oneFaction['description'],
+            "open" => $oneFaction['open'],
+        ];
+
+        array_push($factionAll, $faction);
+
+    }
+
+    return $factionAll;
+
+}

@@ -38,13 +38,16 @@ function getPlayerStats($pseudo) {
         if ($userOne['name'] == $pseudo){
             $uuid = $userOne['uuid'];
 
-            $userWorldStats = getFile($worldStats . $uuid . ".json");
+            foreach ($worldStats as $worldOne){
 
-            $playerStatsSelected = [
-                "world1" => $userWorldStats
-            ];
+                $userWorldStats = getFile($worldOne['url'] . $uuid . ".json");
+                if ($userWorldStats == "Le fichier JSON n'existe pas."){
+                    $userWorldStats = "none";
+                }
 
+                $playerStatsSelected[$worldOne['name']] = $userWorldStats;
 
+            }
         }
     }
 

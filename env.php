@@ -16,7 +16,16 @@ $usercacheFile = $minecraftUrl . "usercache.json";
 $usernamecacheFile = $minecraftUrl . "usernamecache.json";
 
 // World/Stats
-$worldStats = $minecraftUrl . "world/stats/";
+$worldStats = [
+    [
+        "name" => "defaultMap",
+        "url" => $minecraftUrl . "world/stats/",
+    ],
+    [
+        "name" => "devMap",
+        "url" => $minecraftUrl . "TyroModV3-Map/stats/",
+    ]
+];
 
 
 /********************

@@ -169,9 +169,20 @@ if (empty($_GET['task'])){
                 "result"=>$globalFac
             ]);
 
+        } else if ($task == "players"){
+
+            $globalPlayer = getAllPlayer();
+
+            echo json_encode([
+                "status"=>"ok",
+                "message"=>"toutes les joueurs",
+                "result"=>$globalPlayer
+            ]);
+
         } else {
 
 
+            $resultGlobal['players'] = getAllPlayer();
             $resultGlobal['factions'] = getAllFaction();
             $resultGlobal['stats'] = getAllStats();
 

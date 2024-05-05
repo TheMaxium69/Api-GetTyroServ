@@ -81,3 +81,30 @@ function getPlayerStats($pseudo) {
 
     return $message;
 }
+
+function getAllPlayer() {
+
+    require "./env.php";
+
+    $usercacheTableau = getFile($usercacheFile);
+
+    $playerAll = [];
+
+    foreach ($usercacheTableau as $userOne){
+
+        $playerSelected = [
+            "uuid"=>$userOne['uuid'],
+            "name"=>$userOne['name'],
+        ];
+
+        array_push($playerAll, $playerSelected);
+    }
+
+    if ($playerAll == []){
+        $message = "no player";
+    } else {
+        $message = $playerAll;
+    }
+
+    return $message;
+}

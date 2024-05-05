@@ -26,6 +26,29 @@ function getPlayer($pseudo) {
     return $message;
 }
 
+function getPseudoByUUID($uuid) {
+
+    require "./env.php";
+
+    $usercacheTableau = getFile($usercacheFile);
+
+    $pseudo = null;
+
+    foreach ($usercacheTableau as $userOne){
+        if ($userOne['uuid'] == $uuid){
+            $pseudo = $userOne['name'];
+        }
+    }
+
+    if ($pseudo == null){
+        $message = "no player";
+    } else {
+        $message = $pseudo;
+    }
+
+    return $message;
+}
+
 function getPlayerStats($pseudo) {
 
     require "./env.php";

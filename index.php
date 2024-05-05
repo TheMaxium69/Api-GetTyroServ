@@ -19,10 +19,16 @@ require "tyroserv/init.php";
 if (empty($_GET['task'])){
 
     if (empty($_GET['pseudo'])){
-        echo json_encode(["status"=>"ok", "message"=>"no pseudo"]);
-        exit();
+        if (empty($_GET['uuid'])){
+            echo json_encode(["status"=>"ok", "message"=>"no pseudo"]);
+            exit();
+        } else {
+            $uuid = $_GET['uuid'];
+            $pseudo = getPseudoByUUID($uuid);
+        }
+    } else {
+        $pseudo = $_GET['pseudo'];
     }
-    $pseudo = $_GET['pseudo'];
 
     $result['player'] = getPlayer($pseudo);
     if ($result['player'] !== "no player"){
@@ -52,10 +58,16 @@ if (empty($_GET['task'])){
     if (empty($_GET['global'])){
 
         if (empty($_GET['pseudo'])){
-            echo json_encode(["status"=>"ok", "message"=>"no pseudo"]);
-            exit();
+            if (empty($_GET['uuid'])){
+                echo json_encode(["status"=>"ok", "message"=>"no pseudo"]);
+                exit();
+            } else {
+                $uuid = $_GET['uuid'];
+                $pseudo = getPseudoByUUID($uuid);
+            }
+        } else {
+            $pseudo = $_GET['pseudo'];
         }
-        $pseudo = $_GET['pseudo'];
 
         if ($task == "faction"){
 

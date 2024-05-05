@@ -32,6 +32,8 @@ if (empty($_GET['task'])){
         $result['faction'] = getFactionByUser($name);
         $result['money'] = getMoney($uuid);
         $result['roles'] = getRoles($uuid);
+        $result['stats'] = getPlayerStats($pseudo);
+
 
     }
 
@@ -112,6 +114,16 @@ if (empty($_GET['task'])){
 
         }
 
+
+    } else if ($task == "stats"){
+
+        $playerStats = getPlayerStats($pseudo);
+
+        echo json_encode([
+            "status"=>"ok",
+            "message"=>"Les world stats de " . $pseudo,
+            "result"=>$playerStats
+        ]);
 
     } else {
 

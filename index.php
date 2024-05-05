@@ -191,11 +191,22 @@ if (empty($_GET['task'])){
                 "result"=>$globalPlayer
             ]);
 
+        } else if ($task == "servers"){
+
+            $globalServer = getServerList();
+
+            echo json_encode([
+                "status"=>"ok",
+                "message"=>"liste des serveurs",
+                "result"=>$globalServer
+            ]);
+
         } else {
 
 
             $resultGlobal['players'] = getAllPlayer();
             $resultGlobal['factions'] = getAllFaction();
+            $resultGlobal['servers'] = getServerList();
             $resultGlobal['stats'] = getAllStats();
 
 

@@ -75,3 +75,27 @@ function getAllStats(){
     return $mergedMapAll;
 
 }
+
+
+
+function getServerList(){
+
+    require "./env.php";
+
+    $servers = [];
+    $i = 0;
+
+    foreach ($worldStats as $worldStatsOne) {
+
+        $servers[$i]=[
+            "id"=>$i,
+            "name"=>$worldStatsOne['name']
+        ];
+
+        $i = $i + 1;
+    }
+
+    return $servers;
+
+
+}

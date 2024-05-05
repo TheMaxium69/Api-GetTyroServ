@@ -18,12 +18,20 @@ $usernamecacheFile = $minecraftUrl . "usernamecache.json";
 // World/Stats
 $worldStats = [
     [
-        "name" => "defaultMap",
+        "name" => "instance",
         "url" => $minecraftUrl . "world/stats/",
     ],
     [
-        "name" => "devMap",
+        "name" => "copieDev",
         "url" => $minecraftUrl . "TyroModV3-Map/stats/",
+    ],
+    [
+        "name" => "devMap",
+        "url" => "C:\Users/mxmto/Developpement/Minecraft/Mod/Forge/TyroModS3_Forge1-12/run/saves/TyroMapTest/stats/",
+    ],
+    [
+        "name" => "testDashboard",
+        "url" => "C:\Users/mxmto/Developpement/Minecraft/Mod/Forge/TyroModS3_Forge1-12/run/saves/TestDashboard/stats/",
     ]
 ];
 
